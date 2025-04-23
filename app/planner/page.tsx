@@ -1,32 +1,34 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
+import TimeBarList from '../../components/TimeBar/TimeBarList';
 import PlanBoxList, { PlanBoxData } from '../../components/PlanBox/PlanBoxList';
 
 export default function PlannerPage() {
-  // 초깃값: 한 개의 빈 PlanBox
+  // PlanBox 목록 상태 (예시로 1개 빈 박스 초기화)
   const [boxes, setBoxes] = useState<PlanBoxData[]>([
-    { id: crypto.randomUUID(), time: '', duration: '', title: '', memo: '' },
+    {
+      id: crypto.randomUUID(),
+      hours: '',
+      minutes: '',
+      durHours: '',
+      durMinutes: '',
+      title: '',
+      memo: '',
+    },
   ]);
 
   return (
     <main className="p-6 flex min-h-screen bg-gray-50">
-      {/* 왼쪽 타임라인 영역 */}
-      <div className="flex-1 border-r p-4">
+      {/* 왼쪽 타임라인 영역 (고정 너비) */}
+      <div className="w-[300px] border-r p-4">
         <h1 className="text-xl font-bold mb-4">📅 타임라인 영역</h1>
-        <p className="text-sm text-gray-500">← 이쪽은 왼쪽 타임라인 영역</p>
+        <TimeBarList />
       </div>
 
-      {/* 오른쪽 PlanBoxList 영역 */}
-      <div className="w-[600px] p-4">
-        <h2 className="text-lg font-bold mb-2">📝 플랜박스 목록</h2>
+      {/* 오른쪽 플랜박스 영역 */}
+      <div className="flex-1 p-4">
         <PlanBoxList boxes={boxes} onChange={setBoxes} />
-        <button
-          className="mt-4 bg-blue-600 text-white px-4 py-2 rounded"
-          onClick={() => console.log('현재 박스:', boxes)}
-        >
-          일정 저장하기
-        </button>
       </div>
     </main>
   );
